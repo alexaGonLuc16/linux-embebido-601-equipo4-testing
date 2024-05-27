@@ -1,14 +1,30 @@
-import os
+import sys
+import glob
 
-def find_available_Serial_ports() -> list[str]:
-    dev_files = os.listdir('/dev/')
-    # Filtrar y retornar aquellos que comienzan con 'ttyA'
-    return [file for file in dev_files if file.startswith('ttyA')]
+import serial#libreria pyserial
 
-# Llamada a la función para probarla
-print(find_available_Serial_ports())
+def find_available_serial_ports() -> list[str]:
+    if sys.platform.startswith('win'): # Computadora windows
+        platform = 'win'
+        ports =[f'COM{i}' for i in range(1, 256)]
+    elif sys.platform.startswith('linux'): # Computadora Linux
+        platform = 'linux'
+        ports =glob.glob('/dev/tty[A-Za-z]*')
+    elif sys.platform.startswith('darwin'): # Mac
+        platform = 'darwin'
+        ports = glob.glob('/dev/tty.*')
+    else:
+        raise EnvironmentError('Unsupported Platform')
+    result = []
+    for port in ports:
+        early_stop = True if platform == 'win' else False
+        try:
+            s= serial.Serial(port)
+            s.close()
+            result.append(port)
+        except (OSError, serial.SerialException):
+            if early_stop:
+                break
+            continue
 
-
-#tarea:
-#traer proto, LM35 y resistencia respectiva.
-#investigar como usar vnc o raspberry pi connect con su rasp
+    return result

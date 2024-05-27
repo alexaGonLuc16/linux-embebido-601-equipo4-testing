@@ -2,6 +2,15 @@ import time
 
 import serial
 
+BAUDRATES = [
+    2400,
+    4800, 
+    9600, 
+    19200, 
+    38400, 
+    57600, 
+    115200
+]
 
 class SensorSerial:
 
