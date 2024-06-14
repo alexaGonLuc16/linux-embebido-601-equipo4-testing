@@ -55,7 +55,7 @@ class App(Frame):
         return Combobox(
             self, 
             values=ports, 
-            font=('Courier', 20)
+            font=('Helvetica Neue', 20)
         )
     
     def create_serial_devices_refresh_button(self) -> Button:
@@ -73,7 +73,7 @@ class App(Frame):
     
     def create_connect_serial_button(self) -> Button:
         return Button(
-            master=self,
+            master=self,    
             text='Connect',
             command=self.create_sensor_serial
         )
@@ -82,21 +82,27 @@ class App(Frame):
         return Label(
             master=self,
             text='-- ºC',
-            font=('Courier', 20)
+            font=('Helvetica Neue', 20)
         )
     
     def create_select_device_label(self)-> Label:
         return Label(
             master=self, 
-            text='Select device',
-            font=('Courier', 20)
+            text='Select device:',
+            font=('Helvetica', 20),
+            padx=10,  # Padding horizontal de 10 píxeles
+            pady=10  # Padding vertical de 10 píxeles
         )
     #select device
     def create_title_label(self)-> Label:
         return Label(
             master=self, 
             text='Temperature meter',
-            font=('Courier', 20)
+            font=('Helvetica Neue', 20),
+            fg='black',  # Cambia el color del texto a azul
+            bg='#CCBB66',  # Cambia el color de fondo a blanco
+            padx=10,  # Padding horizontal de 10 píxeles
+            pady=10  # Padding vertical de 10 píxeles
         )
     
     def create_read_temperature_button(self)->Button:
